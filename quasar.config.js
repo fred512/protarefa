@@ -2,7 +2,7 @@ import { defineConfig } from '#q-app/wrappers'
 
 export default defineConfig(() => {
   return {
-    boot: [],
+    boot: ['auth'],
 
     css: ['app.css'],
 
