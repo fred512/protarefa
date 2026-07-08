@@ -103,7 +103,7 @@
             <div v-if="tarefa.descricao" class="tarefa-desc">{{ tarefa.descricao }}</div>
           </div>
 
-          <div class="row no-wrap items-center">
+          <div class="tarefa-acoes row no-wrap items-center">
             <q-btn flat round dense size="sm" icon="edit" color="grey-6" @click="editarTarefa(tarefa)" />
             <q-btn flat round dense size="sm" icon="delete" color="grey-6" @click="confirmarExclusaoTarefa(tarefa)" />
           </div>

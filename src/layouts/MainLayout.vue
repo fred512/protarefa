@@ -2,7 +2,9 @@
   <q-layout view="hHh lpR fFf">
     <q-header class="pt-header">
       <q-toolbar>
-        <q-icon name="task_alt" size="26px" color="primary" class="q-mr-sm" />
+        <div class="pt-logo q-mr-sm">
+          <q-icon name="task_alt" size="20px" color="white" />
+        </div>
         <q-toolbar-title>
           Pro<span class="text-primary">Tarefa</span>
           <span class="pt-versao q-ml-sm">v{{ versao }}</span>

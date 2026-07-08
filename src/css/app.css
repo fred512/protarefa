@@ -1,5 +1,5 @@
 /* ============================================================
-   ProTarefa — "Estúdio Noturno"
+   ProTarefa — "Estúdio Noturno" (v2)
    Display: Bricolage Grotesque · Corpo: Figtree
    Tinta #0D0F14 · Violeta #7C6FFF · Sinais: aço/âmbar/lima
    ============================================================ */
@@ -7,9 +7,11 @@
 :root {
   --pt-tinta: #0D0F14;
   --pt-carvao: #141824;
+  --pt-painel: #151926;
   --pt-linha: rgba(255, 255, 255, 0.07);
   --pt-linha-forte: rgba(255, 255, 255, 0.14);
   --pt-violeta: #7C6FFF;
+  --pt-violeta-claro: #A79CFF;
   --pt-lima: #A3E635;
   --pt-ambar: #FFB454;
   --pt-aco: #8A93A6;
@@ -29,14 +31,43 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.02em;
 }
 
+::selection {
+  background: rgba(124, 111, 255, 0.45);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid rgba(124, 111, 255, 0.7);
+  outline-offset: 2px;
+}
+
 /* ---------- Atmosfera de fundo ---------- */
 
 body.body--dark {
+  background: var(--pt-tinta);
+}
+
+/* aurora que deriva lentamente */
+#q-app::before {
+  content: '';
+  position: fixed;
+  inset: -25%;
+  z-index: 0;
+  pointer-events: none;
   background:
-    radial-gradient(1100px 550px at 88% -12%, rgba(124, 111, 255, 0.14), transparent 62%),
-    radial-gradient(900px 500px at -12% 112%, rgba(163, 230, 53, 0.06), transparent 60%),
-    var(--pt-tinta);
-  background-attachment: fixed;
+    radial-gradient(45% 38% at 78% 12%, rgba(124, 111, 255, 0.16), transparent 65%),
+    radial-gradient(38% 34% at 10% 92%, rgba(163, 230, 53, 0.07), transparent 62%),
+    radial-gradient(30% 26% at 92% 78%, rgba(94, 200, 248, 0.05), transparent 60%);
+  animation: pt-aurora 30s ease-in-out infinite alternate;
+}
+
+@keyframes pt-aurora {
+  from { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+  to { transform: translate3d(3%, -2.5%, 0) rotate(4deg) scale(1.06); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #q-app::before { animation: none; }
 }
 
 /* grão sutil por cima de tudo */
@@ -65,6 +96,62 @@ body.body--dark::after {
 .anim-4 { animation-delay: 0.24s; }
 .anim-5 { animation-delay: 0.32s; }
 
+/* ---------- Botões (acabamento global) ---------- */
+
+.q-btn {
+  transition: transform 0.12s ease, box-shadow 0.18s ease;
+}
+
+.q-btn:active {
+  transform: scale(0.97);
+}
+
+/* primário com volume: gradiente + brilho interno + sombra colorida */
+.q-btn.bg-primary {
+  background: linear-gradient(165deg, #8B7EFF 0%, #6C5FE8 100%) !important;
+  box-shadow:
+    0 8px 26px rgba(124, 111, 255, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.q-btn.bg-primary:hover {
+  box-shadow:
+    0 10px 34px rgba(124, 111, 255, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+/* FAB flutuando com halo */
+.q-btn--fab.bg-primary {
+  box-shadow:
+    0 14px 40px rgba(124, 111, 255, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+/* ---------- Campos de formulário ---------- */
+
+.q-field--outlined .q-field__control {
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.028);
+  transition: box-shadow 0.18s ease;
+}
+
+.q-field--outlined .q-field__control:before {
+  border-color: var(--pt-linha-forte);
+  transition: border-color 0.18s ease;
+}
+
+.q-field--outlined:hover .q-field__control:before {
+  border-color: rgba(255, 255, 255, 0.24);
+}
+
+.q-field--outlined.q-field--focused .q-field__control {
+  box-shadow: 0 0 0 3px rgba(124, 111, 255, 0.16);
+}
+
+.q-field--outlined.q-field--focused .q-field__control:after {
+  border-width: 1px;
+}
+
 /* ---------- Header ---------- */
 
 .pt-header {
@@ -77,6 +164,20 @@ body.body--dark::after {
 .pt-header .q-toolbar__title {
   font-weight: 800;
   font-size: 1.35rem;
+}
+
+/* tile da marca no toolbar */
+.pt-logo {
+  width: 34px;
+  height: 34px;
+  border-radius: 11px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, #7C72FF, #5A4FD6);
+  box-shadow:
+    0 4px 14px rgba(124, 111, 255, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
 .pt-versao {
@@ -112,6 +213,16 @@ body.body--dark::after {
   box-shadow:
     0 12px 40px rgba(124, 111, 255, 0.45),
     inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  animation: pt-flutuar 5.5s ease-in-out infinite;
+}
+
+@keyframes pt-flutuar {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .login-marca .login-check { animation: none; }
 }
 
 .login-titulo {
@@ -123,7 +234,10 @@ body.body--dark::after {
 }
 
 .login-titulo .destaque {
-  color: var(--pt-violeta);
+  background: linear-gradient(120deg, var(--pt-violeta), var(--pt-violeta-claro));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .login-sub {
@@ -132,12 +246,28 @@ body.body--dark::after {
 }
 
 .login-card {
+  position: relative;
   width: 92%;
   max-width: 410px;
   border-radius: 20px !important;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015)) !important;
   border: 1px solid var(--pt-linha) !important;
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* fio de luz na borda do card */
+.login-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  pointer-events: none;
+  background: linear-gradient(160deg, rgba(124, 111, 255, 0.55), transparent 38%, transparent 62%, rgba(163, 230, 53, 0.28));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
 }
 
 /* ---------- Cards de projeto ---------- */
@@ -149,9 +279,10 @@ body.body--dark::after {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.012)) !important;
   border: 1px solid var(--pt-linha) !important;
   overflow: hidden;
-  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
+/* luz da cor do projeto emanando do topo */
 .projeto-card::before {
   content: '';
   position: absolute;
@@ -159,16 +290,31 @@ body.body--dark::after {
   pointer-events: none;
   background: radial-gradient(320px 150px at 12% 0%, var(--cor-projeto, var(--pt-violeta)), transparent 70%);
   opacity: 0.16;
-  transition: opacity 0.18s ease;
+  transition: opacity 0.2s ease;
+}
+
+/* fio da cor do projeto no topo */
+.projeto-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 16px;
+  right: 40%;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--cor-projeto, var(--pt-violeta)), transparent);
+  opacity: 0.9;
 }
 
 .projeto-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px);
   border-color: var(--pt-linha-forte) !important;
-  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.45);
+  box-shadow:
+    0 18px 48px rgba(0, 0, 0, 0.5),
+    0 4px 30px color-mix(in srgb, var(--cor-projeto, var(--pt-violeta)) 18%, transparent);
 }
 
-.projeto-card:hover::before { opacity: 0.28; }
+.projeto-card:hover::before { opacity: 0.3; }
 
 .pc-dot {
   width: 11px;
@@ -203,7 +349,7 @@ body.body--dark::after {
 
 .pc-barra > div {
   border-radius: 999px;
-  transition: width 0.3s ease;
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .pc-contagens {
@@ -270,10 +416,15 @@ body.body--dark::after {
   color: var(--pt-texto);
 }
 
+.filtro-pill:active {
+  transform: scale(0.96);
+}
+
 .filtro-pill.ativo {
   color: #0D0F14;
   background: var(--cor-pill, var(--pt-violeta));
   border-color: transparent;
+  box-shadow: 0 4px 18px color-mix(in srgb, var(--cor-pill, var(--pt-violeta)) 35%, transparent);
 }
 
 .filtro-pill .dot {
@@ -297,11 +448,12 @@ body.body--dark::after {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.012));
   border: 1px solid var(--pt-linha);
   overflow: hidden;
-  transition: border-color 0.15s ease, transform 0.15s ease;
+  transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .tarefa-item + .tarefa-item { margin-top: 8px; }
 
+/* régua de status na lateral — engrossa no hover */
 .tarefa-item::before {
   content: '';
   position: absolute;
@@ -310,11 +462,16 @@ body.body--dark::after {
   bottom: 0;
   width: 3px;
   background: var(--cor-status, var(--pt-aco));
+  transition: width 0.15s ease;
 }
 
 .tarefa-item:hover {
   border-color: var(--pt-linha-forte);
+  transform: translateX(2px);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.3);
 }
+
+.tarefa-item:hover::before { width: 5px; }
 
 .tarefa-titulo {
   font-weight: 600;
@@ -337,12 +494,45 @@ body.body--dark::after {
 
 .tarefa-feita .tarefa-desc { opacity: 0.45; }
 
-/* ---------- Diálogos ---------- */
+/* ações aparecem no hover (em telas com mouse) */
+@media (hover: hover) {
+  .tarefa-acoes {
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+
+  .tarefa-item:hover .tarefa-acoes,
+  .tarefa-item:focus-within .tarefa-acoes {
+    opacity: 1;
+  }
+}
+
+/* ---------- Diálogos e menus ---------- */
+
+.q-dialog__backdrop {
+  background: rgba(8, 9, 13, 0.55) !important;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+.q-dialog .q-card {
+  background: var(--pt-painel);
+  border: 1px solid var(--pt-linha-forte);
+  border-radius: 18px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+}
 
 .dialogo-card {
   border-radius: 18px !important;
-  background: #151926 !important;
+  background: var(--pt-painel) !important;
   border: 1px solid var(--pt-linha-forte) !important;
+}
+
+.q-menu {
+  background: #171B29;
+  border: 1px solid var(--pt-linha-forte);
+  border-radius: 14px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
 }
 
 /* ---------- Estado vazio ---------- */
@@ -351,6 +541,16 @@ body.body--dark::after {
   color: var(--pt-texto-2);
   border: 1px dashed var(--pt-linha-forte);
   border-radius: 18px;
+}
+
+.estado-vazio .q-icon {
+  color: var(--pt-violeta);
+  opacity: 0.55;
+  animation: pt-flutuar 5.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .estado-vazio .q-icon { animation: none; }
 }
 
 /* ---------- Scrollbar ---------- */
