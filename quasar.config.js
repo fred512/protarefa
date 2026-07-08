@@ -51,7 +51,13 @@ export default defineConfig(() => {
 
     pwa: {
       workboxMode: 'GenerateSW',
-      manifestFilename: 'manifest.json'
+      manifestFilename: 'manifest.json',
+      extendGenerateSWOptions (cfg) {
+        // Sem isso o SW novo fica "waiting" e o antigo continua servindo
+        // um index.html cujos assets já não existem no deploy novo
+        cfg.skipWaiting = true
+        cfg.clientsClaim = true
+      }
     }
   }
 })
