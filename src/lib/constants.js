@@ -10,5 +10,6 @@ export const LISTA_STATUS = Object.values(STATUS)
 // Cores disponíveis para os cards de projeto
 export const CORES_PROJETO = [
   '#7C6FFF', '#A3E635', '#FFB454', '#FF5C7A',
-  '#5EC8F8', '#F472B6', '#2DD4BF', '#FB923C'
+  '#5EC8F8', '#F472B6', '#2DD4BF', '#FB923C',
+  '#B71C1C', '#5D4037'
 ]
