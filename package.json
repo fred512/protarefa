@@ -1,0 +1,39 @@
+{
+  "name": "protarefa",
+  "version": "1.0.0",
+  "description": "Gerenciador de tarefas por projeto",
+  "productName": "ProTarefa",
+  "author": "Fred",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "quasar dev",
+    "build": "quasar build -m pwa",
+    "preview": "quasar serve dist/pwa --history"
+  },
+  "dependencies": {
+    "@quasar/extras": "^1.17.0",
+    "@supabase/supabase-js": "^2.49.0",
+    "pinia": "^3.0.1",
+    "quasar": "^2.18.1",
+    "register-service-worker": "^1.7.2",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "@quasar/app-vite": "^2.2.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.1",
+    "workbox-build": "^7.3.0",
+    "workbox-cacheable-response": "^7.3.0",
+    "workbox-core": "^7.3.0",
+    "workbox-expiration": "^7.3.0",
+    "workbox-precaching": "^7.3.0",
+    "workbox-routing": "^7.3.0",
+    "workbox-strategies": "^7.3.0"
+  },
+  "engines": {
+    "node": "^28 || ^26 || ^24 || ^22 || ^20",
+    "npm": ">= 6.13.4"
+  }
+}
