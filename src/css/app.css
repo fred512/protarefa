@@ -270,6 +270,77 @@ body.body--dark::after {
   mask-composite: exclude;
 }
 
+/* ---------- Topo do dashboard ---------- */
+
+.dashboard-topo {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+
+@media (max-width: 599px) {
+  .dashboard-topo { align-items: stretch; }
+  .dashboard-topo > .q-btn { width: 100%; }
+}
+
+/* ---------- Resumo agregado ---------- */
+
+.resumo-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 26px;
+}
+
+@media (max-width: 599px) {
+  .resumo-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.resumo-tile {
+  position: relative;
+  overflow: hidden;
+  padding: 15px 18px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.012));
+  border: 1px solid var(--pt-linha);
+}
+
+.resumo-tile::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(220px 90px at 0% 0%, var(--cor, var(--pt-violeta)), transparent 72%);
+  opacity: 0.12;
+}
+
+.resumo-num {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 800;
+  font-size: 2rem;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.resumo-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 7px;
+  font-size: 0.8rem;
+  color: var(--pt-texto-2);
+}
+
+.resumo-label .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--cor, var(--pt-violeta));
+}
+
 /* ---------- Cards de projeto ---------- */
 
 .projeto-card {
@@ -376,6 +447,15 @@ body.body--dark::after {
   width: 7px;
   height: 7px;
   border-radius: 50%;
+}
+
+.pc-vazio {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: var(--pt-texto-2);
+  opacity: 0.75;
 }
 
 /* ---------- Título de página ---------- */
