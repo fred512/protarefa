@@ -255,6 +255,17 @@ body.body--dark::after {
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5) !important;
 }
 
+/* botões do login não quebram (ícone + texto na mesma linha) */
+.login-card .q-btn__content {
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+/* o logo do Google não pode ser espremido pelo flex */
+.login-card .q-btn__content svg {
+  flex-shrink: 0;
+}
+
 /* fio de luz na borda do card */
 .login-card::before {
   content: '';

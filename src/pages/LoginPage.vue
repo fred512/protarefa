@@ -12,7 +12,7 @@
 
     <q-card flat class="login-card q-pa-md anim-3">
       <q-card-section>
-        <q-form class="q-gutter-md" @submit.prevent="entrar">
+        <q-form class="q-gutter-y-md" @submit.prevent="entrar">
           <q-input
             v-model="email"
             type="email"
