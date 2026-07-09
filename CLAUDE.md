@@ -51,6 +51,18 @@ Direção estética **"Estúdio Noturno"** — tema escuro, definida em `src/css
 - Idioma dos commits: português.
 - Erros de operação são mostrados ao usuário via `$q.notify({ type: 'negative', ... })`.
 
+## Próximos passos / ideias (backlog)
+
+Melhorias propostas para os **anexos** (feature já no ar), a retomar depois da
+atualização da IDE:
+
+- **Miniatura das imagens**: nos anexos que são imagem, mostrar um preview
+  (thumbnail) em vez de só o ícone genérico. Provavelmente via link assinado
+  curto para a imagem, exibido num `<img>` pequeno na lista do TarefaDialog.
+- **Abrir anexo direto da lista de tarefas**: permitir baixar/visualizar o
+  anexo a partir do item na `ProjetoPage`, sem precisar abrir o diálogo de
+  edição (hoje o 📎 é só um indicador de contagem).
+
 ## Configuração externa (fora do código)
 
 Estas dependem do dashboard e **não** estão versionadas:
