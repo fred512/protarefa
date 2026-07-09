@@ -13,3 +13,23 @@ export const CORES_PROJETO = [
   '#5EC8F8', '#F472B6', '#2DD4BF', '#FB923C',
   '#B71C1C', '#5D4037'
 ]
+
+// ---- Anexos ----
+export const MAX_ANEXO_MB = 10
+export const MAX_ANEXO_BYTES = MAX_ANEXO_MB * 1024 * 1024
+
+export function tipoAnexoValido (tipo) {
+  return tipo === 'application/pdf' || tipo.startsWith('image/')
+}
+
+export function iconeAnexo (tipo) {
+  if (tipo === 'application/pdf') return 'picture_as_pdf'
+  if (tipo.startsWith('image/')) return 'image'
+  return 'insert_drive_file'
+}
+
+export function formatarTamanho (bytes) {
+  if (bytes < 1024) return `${bytes} B`
+  if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`
+  return `${(bytes / 1024 / 1024).toFixed(1)} MB`
+}

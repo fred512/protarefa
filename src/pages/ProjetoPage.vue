@@ -101,6 +101,10 @@
           <div class="col">
             <div class="tarefa-titulo">{{ tarefa.titulo }}</div>
             <div v-if="tarefa.descricao" class="tarefa-desc">{{ tarefa.descricao }}</div>
+            <div v-if="tarefa.num_anexos" class="tarefa-anexos">
+              <q-icon name="attach_file" size="13px" />
+              {{ tarefa.num_anexos }} anexo{{ tarefa.num_anexos === 1 ? '' : 's' }}
+            </div>
           </div>
 
           <div class="tarefa-acoes row no-wrap items-center">
