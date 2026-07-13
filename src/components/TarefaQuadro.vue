@@ -14,12 +14,11 @@
 
       <draggable
         v-model="colunas[s.valor]"
-        :group="{ name: 'tarefas' }"
+        group="tarefas"
         item-key="id"
         class="coluna-lista"
         :animation="180"
-        :delay="180"
-        :delay-on-touch-only="true"
+        handle=".card-grip"
         ghost-class="card-ghost"
         @change="e => aoMover(e, s.valor)"
       >
@@ -30,6 +29,7 @@
             @click="emit('editar', tarefa)"
           >
             <div class="card-topo">
+              <q-icon name="drag_indicator" size="18px" class="card-grip" @click.stop />
               <div class="card-titulo">{{ tarefa.titulo }}</div>
               <q-btn flat round dense size="sm" icon="more_vert" class="card-menu-btn" @click.stop>
                 <q-menu auto-close anchor="bottom right" self="top right">

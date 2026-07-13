@@ -666,7 +666,7 @@ body.body--dark::after {
 
 .quadro-card {
   position: relative;
-  cursor: grab;
+  cursor: pointer;
   padding: 10px 12px;
   border-radius: 13px;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
@@ -679,14 +679,23 @@ body.body--dark::after {
   border-color: var(--pt-linha-forte);
 }
 
-.quadro-card:active {
-  cursor: grabbing;
-}
-
 .card-topo {
   display: flex;
   align-items: flex-start;
-  gap: 6px;
+  gap: 4px;
+}
+
+.card-grip {
+  color: var(--pt-texto-2);
+  opacity: 0.55;
+  cursor: grab;
+  touch-action: none;
+  flex-shrink: 0;
+  margin: 1px -2px 0 -4px;
+}
+
+.card-grip:active {
+  cursor: grabbing;
 }
 
 .card-titulo {

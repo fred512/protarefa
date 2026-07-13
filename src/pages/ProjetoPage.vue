@@ -1,6 +1,6 @@
 <template>
   <q-page padding>
-    <div v-if="projeto" class="q-mx-auto" style="max-width: 800px">
+    <div v-if="projeto" class="q-mx-auto" style="max-width: 800px; padding-bottom: 96px">
       <!-- Cabeçalho do projeto -->
       <div class="row items-center q-mb-xs no-wrap anim-1">
         <q-btn flat round dense icon="arrow_back" to="/" class="q-mr-sm" />
