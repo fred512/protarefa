@@ -53,6 +53,18 @@ Direção estética **"Estúdio Noturno"** — tema escuro, definida em `src/css
 
 ## Próximos passos / ideias (backlog)
 
+**Quadro (kanban) — arrastar por toque no aparelho do Fred** (adiado, sem
+pressa). O arrastar-e-soltar funciona no desktop (mouse) via harness; no
+dispositivo do Fred (provável celular/touch) o gesto de arrastar ainda pode
+não mover o cartão, mesmo com a alça (`.card-grip` com `touch-action: none`)
+em `TarefaQuadro.vue`. Ao retomar: emular touch no Playwright, revisar conflito
+com o container de rolagem horizontal `.quadro`, ou trocar a lib. Obs.: a
+**persistência** (o status voltar para "A fazer" ao recarregar) foi um bug
+**separado já corrigido** — a mutação otimista de `tarefa.status` no componente
+fazia a guarda de `ProjetoPage.mudarStatus` pular o gravar; hoje o componente
+não altera mais `tarefa.status` antes de emitir. Alternativas que funcionam
+para mudar status: menu `⋮ → Mover para` e o ícone de status na visão Lista.
+
 Melhorias propostas para os **anexos** (feature já no ar), a retomar depois da
 atualização da IDE:
 

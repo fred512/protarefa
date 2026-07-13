@@ -105,19 +105,20 @@ watch(
 )
 
 function aoMover (evento, statusDestino) {
-  // Só interessa quando um card entra nesta coluna (arrastado de outra)
+  // Só interessa quando um card entra nesta coluna (arrastado de outra).
+  // NÃO alteramos tarefa.status aqui: o pai precisa ver o status antigo
+  // para detectar a mudança e gravar no banco. O card já se moveu (SortableJS);
+  // o status é reconciliado pelo watch quando o persist volta.
   if (evento.added) {
-    const tarefa = evento.added.element
-    tarefa.status = statusDestino // feedback imediato antes do persist
-    emit('mudar-status', tarefa, statusDestino)
+    emit('mudar-status', evento.added.element, statusDestino)
   }
 }
 
 function moverPorMenu (tarefa, statusDestino) {
   if (tarefa.status === statusDestino) return
-  // Move local para dar resposta imediata; o persist vem pelo evento
+  // Move local para dar resposta imediata (sem mexer em tarefa.status, senão
+  // o pai acha que nada mudou e não grava). O persist vem pelo evento.
   colunas.value[tarefa.status] = colunas.value[tarefa.status].filter(t => t.id !== tarefa.id)
-  tarefa.status = statusDestino
   colunas.value[statusDestino] = [tarefa, ...colunas.value[statusDestino]]
   emit('mudar-status', tarefa, statusDestino)
 }
