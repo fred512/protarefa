@@ -594,6 +594,167 @@ body.body--dark::after {
   color: var(--pt-texto-2);
 }
 
+/* ---------- Alternador de visão ---------- */
+
+.visao-toggle {
+  border: 1px solid var(--pt-linha);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.visao-toggle .q-btn {
+  padding: 4px 14px;
+}
+
+/* ---------- Quadro (kanban) ---------- */
+
+.quadro {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  align-items: flex-start;
+}
+
+.quadro-coluna {
+  flex: 1 1 0;
+  min-width: 264px;
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--pt-linha);
+  border-radius: 16px;
+  padding: 10px 10px 4px;
+}
+
+.coluna-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 6px 10px;
+  font-weight: 600;
+}
+
+.coluna-cabecalho .dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px 1px var(--cor);
+}
+
+.coluna-nome {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  letter-spacing: -0.01em;
+}
+
+.coluna-contagem {
+  margin-left: auto;
+  font-size: 0.78rem;
+  color: var(--pt-texto-2);
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 999px;
+  padding: 1px 9px;
+}
+
+.coluna-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 60px;
+  padding-bottom: 6px;
+}
+
+.quadro-card {
+  position: relative;
+  cursor: grab;
+  padding: 10px 12px;
+  border-radius: 13px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  border: 1px solid var(--pt-linha);
+  border-left: 3px solid var(--cor);
+  transition: border-color 0.15s ease, transform 0.12s ease;
+}
+
+.quadro-card:hover {
+  border-color: var(--pt-linha-forte);
+}
+
+.quadro-card:active {
+  cursor: grabbing;
+}
+
+.card-topo {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.card-titulo {
+  flex: 1;
+  font-weight: 600;
+  font-size: 0.92rem;
+  line-height: 1.3;
+  word-break: break-word;
+}
+
+.card-menu-btn {
+  margin: -4px -6px -4px 0;
+  color: var(--pt-texto-2);
+}
+
+.card-desc {
+  margin-top: 4px;
+  font-size: 0.78rem;
+  color: var(--pt-texto-2);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-anexos {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-top: 6px;
+  font-size: 0.72rem;
+  color: var(--pt-texto-2);
+}
+
+.card-feito .card-titulo {
+  text-decoration: line-through;
+  text-decoration-color: rgba(163, 230, 53, 0.6);
+  opacity: 0.55;
+}
+
+.card-ghost {
+  opacity: 0.4;
+  border-style: dashed;
+}
+
+.coluna-vazia {
+  font-size: 0.76rem;
+  color: var(--pt-texto-2);
+  opacity: 0.5;
+  text-align: center;
+  padding: 14px 6px;
+  border: 1px dashed var(--pt-linha);
+  border-radius: 12px;
+}
+
+@media (max-width: 640px) {
+  .quadro {
+    scroll-snap-type: x mandatory;
+    gap: 12px;
+    margin: 0 -16px;
+    padding: 0 16px 8px;
+  }
+  .quadro-coluna {
+    min-width: 82vw;
+    scroll-snap-align: start;
+  }
+}
+
 /* ---------- Anexos no diálogo ---------- */
 
 .anexo-lista {

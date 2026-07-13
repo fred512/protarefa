@@ -30,8 +30,26 @@
         {{ projeto.descricao }}
       </div>
 
-      <!-- Filtro por status -->
-      <div class="row q-gutter-xs q-mb-md anim-2">
+      <!-- Alternador Lista / Quadro -->
+      <div class="row items-center q-mb-md anim-2">
+        <q-btn-toggle
+          v-model="visao"
+          no-caps
+          unelevated
+          dense
+          toggle-color="primary"
+          color="dark"
+          text-color="grey-5"
+          :options="[
+            { label: 'Lista', value: 'lista', icon: 'view_list' },
+            { label: 'Quadro', value: 'quadro', icon: 'view_kanban' }
+          ]"
+          class="visao-toggle"
+        />
+      </div>
+
+      <!-- Filtro por status (só na lista) -->
+      <div v-if="visao === 'lista'" class="row q-gutter-xs q-mb-md">
         <button
           class="filtro-pill"
           :class="{ ativo: filtro === null }"
@@ -52,11 +70,22 @@
         </button>
       </div>
 
-      <!-- Lista de tarefas -->
+      <!-- Carregando -->
       <div v-if="store.carregando && !store.tarefas.length" class="row justify-center q-pa-xl">
         <q-spinner size="40px" color="primary" />
       </div>
 
+      <!-- Quadro -->
+      <TarefaQuadro
+        v-else-if="visao === 'quadro'"
+        :tarefas="store.tarefas"
+        class="anim-3 q-pb-xl"
+        @editar="editarTarefa"
+        @excluir="confirmarExclusaoTarefa"
+        @mudar-status="(t, s) => mudarStatus(t, s)"
+      />
+
+      <!-- Lista -->
       <div v-else-if="!tarefasFiltradas.length" class="estado-vazio column items-center q-pa-xl anim-3">
         <q-icon name="checklist" size="56px" />
         <div class="text-body1 q-mt-md">
@@ -127,13 +156,14 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { useQuasar } from 'quasar'
 import { useRoute, useRouter } from 'vue-router'
 import { useTarefasStore } from 'src/stores/tarefas'
 import { STATUS, LISTA_STATUS } from 'src/lib/constants'
 import ProjetoDialog from 'src/components/ProjetoDialog.vue'
 import TarefaDialog from 'src/components/TarefaDialog.vue'
+import TarefaQuadro from 'src/components/TarefaQuadro.vue'
 
 defineOptions({ name: 'ProjetoPage' })
 
@@ -148,6 +178,10 @@ const filtro = ref(null)
 const dialogProjeto = ref(false)
 const dialogTarefa = ref(false)
 const tarefaEmEdicao = ref(null)
+
+// Visão Lista/Quadro, lembrada no aparelho
+const visao = ref($q.localStorage.getItem('visao_projeto') || 'quadro')
+watch(visao, v => $q.localStorage.set('visao_projeto', v))
 
 const contagem = computed(() => {
   const c = { a_fazer: 0, fazendo: 0, feito: 0 }
