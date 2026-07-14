@@ -13,6 +13,7 @@
             outlined
             autofocus
             :rules="[v => !!v?.trim() || 'Informe o título']"
+            @keyup.enter="salvar"
           />
           <q-input
             v-model="descricao"
