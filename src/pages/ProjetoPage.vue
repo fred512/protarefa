@@ -1,6 +1,6 @@
 <template>
   <q-page padding>
-    <div v-if="projeto" class="q-mx-auto" style="max-width: 800px; padding-bottom: 96px">
+    <div ref="paginaProjetoEl" v-if="projeto" class="q-mx-auto" style="max-width: 800px; padding-bottom: 96px">
       <!-- Cabeçalho do projeto -->
       <div class="row items-center q-mb-xs no-wrap anim-1">
         <q-btn flat round dense icon="arrow_back" to="/" class="q-mr-sm" />
@@ -93,7 +93,12 @@
         </div>
       </div>
 
-      <div v-else class="anim-3 q-pb-xl">
+      <div
+        v-else
+        ref="listaEl"
+        class="lista-tarefas anim-3 q-pb-xl"
+        :style="{ '--altura-lista': `${alturaLista}px` }"
+      >
         <div
           v-for="tarefa in tarefasFiltradas"
           :key="tarefa.id"
@@ -156,7 +161,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useQuasar } from 'quasar'
 import { useRoute, useRouter } from 'vue-router'
 import { useTarefasStore } from 'src/stores/tarefas'
@@ -178,10 +183,25 @@ const filtro = ref(null)
 const dialogProjeto = ref(false)
 const dialogTarefa = ref(false)
 const tarefaEmEdicao = ref(null)
+const paginaProjetoEl = ref(null)
+const listaEl = ref(null)
+const alturaLista = ref(320)
+let observadorTamanho
+
+function atualizarAlturaLista () {
+  if (!listaEl.value) return
+
+  const topo = listaEl.value.getBoundingClientRect().top
+  alturaLista.value = Math.max(240, window.innerHeight - topo - 24)
+}
 
 // Visão Lista/Quadro, lembrada no aparelho
 const visao = ref($q.localStorage.getItem('visao_projeto') || 'quadro')
-watch(visao, v => $q.localStorage.set('visao_projeto', v))
+watch(visao, async v => {
+  $q.localStorage.set('visao_projeto', v)
+  await nextTick()
+  atualizarAlturaLista()
+})
 
 const contagem = computed(() => {
   const c = { a_fazer: 0, fazendo: 0, feito: 0 }
@@ -202,10 +222,21 @@ onMounted(async () => {
       store.carregarTarefas(projetoId)
     ])
     projeto.value = p
+    await nextTick()
+    atualizarAlturaLista()
+    window.addEventListener('resize', atualizarAlturaLista)
+
+    observadorTamanho = new ResizeObserver(atualizarAlturaLista)
+    observadorTamanho.observe(paginaProjetoEl.value)
   } catch (erro) {
     $q.notify({ type: 'negative', message: `Erro ao carregar projeto: ${erro.message}` })
     router.push('/')
   }
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', atualizarAlturaLista)
+  observadorTamanho?.disconnect()
 })
 
 function novaTarefa () {

@@ -43,7 +43,7 @@ const $q = useQuasar()
 const router = useRouter()
 const auth = useAuthStore()
 
-const versao = version.split('.')[0]
+const versao = version
 
 // Restaura preferência de tema salva
 const temaSalvo = $q.localStorage.getItem('tema')

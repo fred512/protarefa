@@ -1,10 +1,10 @@
 <template>
-  <div class="quadro">
+  <div ref="quadroEl" class="quadro">
     <div
       v-for="s in LISTA_STATUS"
       :key="s.valor"
       class="quadro-coluna"
-      :style="{ '--cor': s.cor }"
+      :style="{ '--cor': s.cor, '--altura-coluna': `${alturaColuna}px` }"
     >
       <div class="coluna-cabecalho">
         <span class="dot" :style="{ backgroundColor: s.cor }" />
@@ -78,7 +78,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import draggable from 'vuedraggable'
 import { LISTA_STATUS } from 'src/lib/constants'
 
@@ -88,6 +88,30 @@ const props = defineProps({
 const emit = defineEmits(['editar', 'excluir', 'mudar-status'])
 
 const colunas = ref({ a_fazer: [], fazendo: [], feito: [] })
+const quadroEl = ref(null)
+const alturaColuna = ref(320)
+let observadorTamanho
+
+function atualizarAlturaColuna () {
+  if (!quadroEl.value) return
+
+  const topo = quadroEl.value.getBoundingClientRect().top
+  alturaColuna.value = Math.max(240, window.innerHeight - topo - 24)
+}
+
+onMounted(async () => {
+  await nextTick()
+  atualizarAlturaColuna()
+  window.addEventListener('resize', atualizarAlturaColuna)
+
+  observadorTamanho = new ResizeObserver(atualizarAlturaColuna)
+  observadorTamanho.observe(quadroEl.value.parentElement)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', atualizarAlturaColuna)
+  observadorTamanho?.disconnect()
+})
 
 function reconstruir () {
   const nova = { a_fazer: [], fazendo: [], feito: [] }

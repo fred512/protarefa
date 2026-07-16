@@ -594,6 +594,14 @@ body.body--dark::after {
   color: var(--pt-texto-2);
 }
 
+.lista-tarefas {
+  max-height: var(--altura-lista);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  padding-right: 4px;
+}
+
 /* ---------- Alternador de visão ---------- */
 
 .visao-toggle {
@@ -619,8 +627,10 @@ body.body--dark::after {
 .quadro-coluna {
   flex: 1 1 0;
   min-width: 264px;
+  max-height: var(--altura-coluna);
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid var(--pt-linha);
   border-radius: 16px;
@@ -628,6 +638,10 @@ body.body--dark::after {
 }
 
 .coluna-cabecalho {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -661,6 +675,9 @@ body.body--dark::after {
   flex-direction: column;
   gap: 8px;
   min-height: 60px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
   padding-bottom: 6px;
 }
 
